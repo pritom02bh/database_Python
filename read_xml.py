@@ -1,6 +1,8 @@
+# a. read movies.xml from python and print out all the movies, and count how many movies in the list are rated as ‘R’.
+# b. print out root node's attribute
+
 import xml.etree.ElementTree as ET
 
-# Load the XML data
 tree = ET.parse('movies.xml')
 root = tree.getroot()
 
@@ -19,7 +21,6 @@ for movie in root.findall('movie'):
         r_rated_count += 1
 
 print(f"Total 'R' rated movies: {r_rated_count}")
-
 
 
 # Print out the root attribute

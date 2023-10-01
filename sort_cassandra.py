@@ -1,3 +1,5 @@
+# Sort all the rating that is ‘PG’ from Cassandra using python and write to sorted_movie.xml with all the original columns. 
+
 from cassandra.cluster import Cluster
 from cassandra.policies import DCAwareRoundRobinPolicy
 from cassandra.auth import PlainTextAuthProvider

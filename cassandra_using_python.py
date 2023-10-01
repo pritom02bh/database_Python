@@ -1,19 +1,19 @@
+# 5(C). Create a Cassandra table using python, and insert everything from xml to the db table called 'movies'
+
+# Parse Data from movies.xml and insert them into Cassandara table. ( Keyspace = 'movie_keyspace' and Table = 'movies') 
+
 from cassandra.cluster import Cluster
 from cassandra.query import SimpleStatement
 import xml.etree.ElementTree as ET
 
-
 tree = ET.parse('movies.xml')
 root = tree.getroot()
-
 
 cluster = Cluster(['localhost'])
 session = cluster.connect()
 
-
 session.execute("CREATE KEYSPACE IF NOT EXISTS movie_keyspace WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1}")
 session.set_keyspace("movie_keyspace")
-
 
 create_table_query = """
 CREATE TABLE IF NOT EXISTS movies (
@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS movies (
 )
 """
 session.execute(create_table_query)
-
 
 for movie in root.findall('movie'):
     title = movie.get('title')
