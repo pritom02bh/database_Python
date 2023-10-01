@@ -1,17 +1,33 @@
 from cassandra.cluster import Cluster
+from cassandra.policies import DCAwareRoundRobinPolicy
+from cassandra.auth import PlainTextAuthProvider
+import xml.etree.ElementTree as ET
 
-# Connect to your Cassandra cluster (replace with your actual Cassandra cluster's IP addresses)
-cluster = Cluster(['127.0.0.1'])  # Use your Cassandra cluster's IP address or hostname
+auth_provider = PlainTextAuthProvider(username='cassandra', password='cassandra')
 
-# Connect to the keyspace (replace 'mykeyspace' with your keyspace name)
-session = cluster.connect('movie_keyspace')  # Use your keyspace name
+cluster = Cluster(['localhost'])
 
-# Define your CQL query
-cql_query = "SELECT * FROM Rating WHERE Rating = 'PG' ORDER BY rating"
+session = cluster.connect('movie_keyspace') 
 
-# Execute the query
-result = session.execute(cql_query)
 
-# Process the results
-for Rating in result:
-    print(result)  # Replace this with your desired processing logic
+query = "SELECT * FROM movies WHERE rating = 'PG' ALLOW FILTERING"
+result = session.execute(query)
+
+
+root = ET.Element("movies")
+
+
+for row in result:
+    movie = ET.SubElement(root, "movie")
+    ET.SubElement(movie, "title").text = row.title
+    ET.SubElement(movie, "year").text = str(row.year)
+    ET.SubElement(movie, "rating").text = row.rating
+    
+
+
+tree = ET.ElementTree(root)
+tree.write("sorted_movie.xml", encoding="utf-8", xml_declaration=True)
+
+
+session.shutdown()
+cluster.shutdown()

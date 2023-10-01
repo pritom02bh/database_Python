@@ -12,6 +12,7 @@ for movie in root.findall('movie'):
     
     print(f"Title: {title}")
     print(f"Rating: {rating}")
+    print(f"Title: {title}")
     print('    ')
     
     if rating == 'R':
