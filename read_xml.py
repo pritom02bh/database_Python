@@ -10,11 +10,20 @@ r_rated_count = 0
 
 for movie in root.findall('movie'):
     title = movie.get('title')
+    type = movie.find('type').text
+    format = movie.find('format').text
+    year = movie.find('year').text
     rating = movie.find('rating').text
+    stars = movie.find('stars').text
+    description = movie.find('description').text
     
     print(f"Title: {title}")
+    print(f"Type: {type}")
+    print(f"Format: {format}")
+    print(f"Year: {year}")
     print(f"Rating: {rating}")
-    print(f"Title: {title}")
+    print(f"Stars: {stars}")
+    print(f"Description: {description}")
     print('    ')
     
     if rating == 'R':
