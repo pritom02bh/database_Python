@@ -31,7 +31,6 @@ for movie in root.findall('movie'):
 
 print(f"Total 'R' rated movies: {r_rated_count}")
 
-
 # Print out the root attribute
 root_attribute = root.get('shelf')
 print('    ')
